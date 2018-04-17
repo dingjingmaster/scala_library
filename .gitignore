@@ -1,0 +1,16 @@
+*~
+*.autosave
+*.a
+*.out
+*.core
+*.moc
+*.o
+*.obj
+*.orig
+*.rej
+*.so
+*.so.*
+*_pch.h.cpp
+*.jar
+jar
+lib
