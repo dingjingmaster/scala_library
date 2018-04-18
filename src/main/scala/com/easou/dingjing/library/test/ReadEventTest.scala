@@ -4,9 +4,9 @@
 > Mail    : dingjing@live.cn
 > Created Time: 2018年04月17日 星期二 15时57分35秒
  ************************************************************************/
-package com.easou.dingjing.test;
+package com.easou.dingjing.library.test;
 
-import com.easou.dingjing.{ReadEvent => RE};
+import com.easou.dingjing.library.{ReadEvent => RE};
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD

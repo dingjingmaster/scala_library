@@ -4,7 +4,8 @@
 > Mail    : dingjing@live.cn
 > Created Time: 2018年04月17日 星期二 14时46分06秒
  ************************************************************************/
-package com.easou.dingjing
+package com.easou.dingjing.library;
+
 import scala.collection.mutable.Map;
 import scala.collection.mutable.ListBuffer;
 
@@ -14,7 +15,7 @@ class ItemInfo() {
   private var map = Map[String, String]();
 
 
-  def parseLine(line : String, token : String="\\t") : Unit = {
+  def parseLine(line : String, token : String="\\t") : ItemInfo = {
     var linea = line.replace("\\r", "");
     linea = linea.replace("\\n", "");
 
@@ -27,6 +28,7 @@ class ItemInfo() {
       map(arr(i - 1).trim()) = arr(i);
       i += 2;
     }
+    return this;
   }
 
 

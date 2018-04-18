@@ -4,7 +4,8 @@
 > Mail    : dingjing@live.cn
 > Created Time: 2018年04月17日 星期二 14时46分06秒
  ************************************************************************/
-package com.easou.dingjing
+package com.easou.dingjing.library;
+
 import scala.collection.mutable.Map;
 import scala.collection.mutable.ListBuffer;
 
@@ -33,7 +34,7 @@ class ReadEvent() {
                         "20" -> "event_id");
 
 
-  def parseLine(line : String) : Unit = {
+  def parseLine(line : String) : ReadEvent = {
     var linea = line.replace("\\r", "");
     linea = linea.replace("\\n", "");
     val arr = line.split("\\x01");
@@ -50,6 +51,8 @@ class ReadEvent() {
     }
 
     field("server_time") = arr(22)
+
+    return this;
   }
 
 
