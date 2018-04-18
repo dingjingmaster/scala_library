@@ -21,4 +21,4 @@ branches:
 # install:
 #   apt-get install ....
 # 执行脚本命令
-script: false
+script: true
