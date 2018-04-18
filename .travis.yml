@@ -1,6 +1,24 @@
+# 语言
 language: scala
 jdk: oraclejdk8
+# 语言版本
 scala:
     - 2.11.8
+# 仓库分支
+branches:
+  only:
+    - master
+
+# 执行install前需要执行的命令
+#before_install:
+    
+
+# 配置解密信息
+# 改变文件权限
+# 配置ssh
+# 配置gid个人信息
+# 执行install
+# install:
+#   apt-get install ....
+# 执行脚本命令
 script: false
-    #- sbt 
