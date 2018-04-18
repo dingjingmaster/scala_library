@@ -6,6 +6,7 @@
  ************************************************************************/
 package com.easou.dingjing
 import scala.collection.mutable.Map;
+import scala.collection.mutable.ListBuffer;
 
 class ItemInfo() {
 
@@ -23,7 +24,7 @@ class ItemInfo() {
 
     i = 2;
     while(i < arr.size) {
-      map(arr(i - 1)) = arr(i);
+      map(arr(i - 1).trim()) = arr(i);
       i += 2;
     }
   }
@@ -44,5 +45,18 @@ class ItemInfo() {
 
     return value;
   }
+
+  def getValues(key : List[String]) : List[String] = {
+    var res = ListBuffer[String]();
+    if (! key.isEmpty) {
+      for (i <- key) {
+        res += getValue(i)
+      }
+    }
+
+    return res.toList;
+  }
+
+
 
 }
