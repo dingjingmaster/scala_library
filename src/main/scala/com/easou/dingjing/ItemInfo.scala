@@ -6,13 +6,11 @@
  ************************************************************************/
 package com.easou.dingjing
 import scala.collection.mutable.Map;
-import scala.collection.mutable.ListBuffer;
 
 class ItemInfo() {
 
   private var gid : String = "";
   private var map = Map[String, String]();
-  private var keys = ListBuffer[String]();
 
 
   def parseLine(line : String, token : String="\\t") : Unit = {
@@ -26,14 +24,13 @@ class ItemInfo() {
     i = 2;
     while(i < arr.size) {
       map(arr(i - 1)) = arr(i);
-      keys += arr(i - 1)
       i += 2;
     }
   }
 
 
-  def getKeys() : List[String] = {
-    return keys.toList;
+  def getKeys() : Iterable[String] = {
+    return map.keys;
   }
 
 
