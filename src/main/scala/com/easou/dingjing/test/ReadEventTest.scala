@@ -25,7 +25,7 @@ object ReadEventTest{
     val test = sc.textFile(readPath)
                     .map(test_line);
 
-    println(test.take(1)(0))
+    println(test.take(2)(1))
   }
 
   def test_line(line : String) : String = {
@@ -38,6 +38,8 @@ object ReadEventTest{
       out += ii.getValue(i)
       out += "\n"
     }
+
+    println(ii.getValues(List("os", "appudid", "uid", "sort", "booktype", "ischapterincharged")))
 
     return out;
   }

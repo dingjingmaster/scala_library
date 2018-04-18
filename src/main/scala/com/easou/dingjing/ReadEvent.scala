@@ -32,21 +32,24 @@ class ReadEvent() {
                         "19" -> "time",
                         "20" -> "event_id");
 
+
   def parseLine(line : String) : Unit = {
     var linea = line.replace("\\r", "");
     linea = linea.replace("\\n", "");
     val arr = line.split("\\x01");
     for (i <- 0 to 20) {
       val key = field(i.toString());
-      field(key) = arr(i);
+      field(key) = arr(i).trim();
       field -= (i.toString())
     }
 
     val para = arr(21).split("\\x02")
     for (i <- para) {
       val itemArr = i.split("\\x03")
-      field(itemArr(0)) = itemArr(1);
+      field(itemArr(0).trim()) = itemArr(1).trim();
     }
+
+    field("server_time") = arr(22)
   }
 
 
@@ -64,6 +67,17 @@ class ReadEvent() {
     }
 
     return value;
+  }
+
+  def getValues(keys : List[String]) : List[String] = {
+    var res = ListBuffer[String]();
+    if (! keys.isEmpty) {
+      for (i <- keys) {
+        res += getValue(i.trim());
+      }
+    }
+
+    return res.toList;
   }
 
 }
