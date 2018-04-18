@@ -1,2 +1,6 @@
 language: scala
-script: true
+jdk: oraclejdk8
+scala:
+    - 2.11.8
+script: false
+    #- sbt 
