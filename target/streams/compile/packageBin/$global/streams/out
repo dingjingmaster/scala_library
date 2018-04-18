@@ -1,0 +1,21 @@
+[0m[[0minfo[0m] [0mPackaging /data/code/scala_library/target/scala-2.11/scala-library_2.11-0.jar ...[0m
+[0m[[0mdebug[0m] [0mInput file mappings:[0m
+[0m[[0mdebug[0m] [0m	com/easou/dingjing/ReadEvent$$anonfun$parseLine$2.class[0m
+[0m[[0mdebug[0m] [0m	  /data/code/scala_library/target/scala-2.11/classes/com/easou/dingjing/ReadEvent$$anonfun$parseLine$2.class[0m
+[0m[[0mdebug[0m] [0m	com/easou/dingjing/ItemInfo$$anonfun$getValues$1.class[0m
+[0m[[0mdebug[0m] [0m	  /data/code/scala_library/target/scala-2.11/classes/com/easou/dingjing/ItemInfo$$anonfun$getValues$1.class[0m
+[0m[[0mdebug[0m] [0m	com/easou/dingjing/ReadEvent$$anonfun$parseLine$1.class[0m
+[0m[[0mdebug[0m] [0m	  /data/code/scala_library/target/scala-2.11/classes/com/easou/dingjing/ReadEvent$$anonfun$parseLine$1.class[0m
+[0m[[0mdebug[0m] [0m	com/easou/dingjing[0m
+[0m[[0mdebug[0m] [0m	  /data/code/scala_library/target/scala-2.11/classes/com/easou/dingjing[0m
+[0m[[0mdebug[0m] [0m	com/easou/dingjing/ItemInfo.class[0m
+[0m[[0mdebug[0m] [0m	  /data/code/scala_library/target/scala-2.11/classes/com/easou/dingjing/ItemInfo.class[0m
+[0m[[0mdebug[0m] [0m	com/easou/dingjing/ReadEvent.class[0m
+[0m[[0mdebug[0m] [0m	  /data/code/scala_library/target/scala-2.11/classes/com/easou/dingjing/ReadEvent.class[0m
+[0m[[0mdebug[0m] [0m	com[0m
+[0m[[0mdebug[0m] [0m	  /data/code/scala_library/target/scala-2.11/classes/com[0m
+[0m[[0mdebug[0m] [0m	com/easou[0m
+[0m[[0mdebug[0m] [0m	  /data/code/scala_library/target/scala-2.11/classes/com/easou[0m
+[0m[[0mdebug[0m] [0m	com/easou/dingjing/ReadEvent$$anonfun$getValues$1.class[0m
+[0m[[0mdebug[0m] [0m	  /data/code/scala_library/target/scala-2.11/classes/com/easou/dingjing/ReadEvent$$anonfun$getValues$1.class[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m

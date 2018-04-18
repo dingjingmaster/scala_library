@@ -12,5 +12,3 @@
 *.so.*
 *_pch.h.cpp
 *.jar
-jar
-lib

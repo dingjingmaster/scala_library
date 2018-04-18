@@ -13,23 +13,12 @@ readeventPath="hdfs://10.26.29.210:8020/user/hive/warehouse/event_info.db/b_read
 myJar="/data/jar/"
 allTestJar="${workPath}/test/allTest.jar"
 
-itemInfoTestClass="com.easou.dingjing.test.ItemInfoTest"
-readeventTestClass="com.easou.dingjing.test.ReadEventTest"
+#itemInfoTestClass="com.easou.dingjing.ItemInfoTest"
+#readeventTestClass="com.easou.dingjing.ReadEventTest"
 
 sparkConf=" --master ${sparkMaster} "
 
-if ${debug}
-then
-    cd ${workPath}
-    rm test -fr && mkdir test
-    sbt package
-    mv ${workPath}/target/scala-*/*.jar ${allTestJar}
-    rm ${workPath}/target -fr
-    rm ${workPath}/project -fr
-fi
-
 cd ${workPath}
+sbt package
 #spark-submit --class ${itemInfoTestClass} ${sparkConf} "${allTestJar}" "${itemInfoPath}"                                # 测试iteminfo解析
-spark-submit --class ${readeventTestClass} ${sparkConf} "${allTestJar}" "${readeventPath}"                              # 测试iteminfo解析
-mkdir ${myJar} -p
-mv ${allTestJar} ${myJar}/dingjing.jar
+#spark-submit --class ${readeventTestClass} ${sparkConf} "${allTestJar}" "${readeventPath}"                              # 测试readevent解析
