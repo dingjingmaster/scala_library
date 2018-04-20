@@ -51,6 +51,7 @@ class ItemInfo() {
   def getValues(key : List[String]) : List[String] = {
     var res = ListBuffer[String]();
     if (! key.isEmpty) {
+      res += this.gid
       for (i <- key) {
         res += getValue(i)
       }

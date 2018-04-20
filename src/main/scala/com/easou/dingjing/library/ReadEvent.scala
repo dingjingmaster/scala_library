@@ -33,26 +33,26 @@ class ReadEvent() {
                         "19" -> "time",
                         "20" -> "event_id");
 
-
   def parseLine(line : String) : ReadEvent = {
     var linea = line.replace("\\r", "");
     linea = linea.replace("\\n", "");
     val arr = line.split("\\x01");
-    for (i <- 0 to 20) {
-      val key = field(i.toString());
-      field(key) = arr(i);
-      field -= (i.toString())
+    if (arr.length >= 22) {
+      for (i <- 0 to 20) {
+        val key = field(i.toString());
+        field(key) = arr(i);
+        field -= (i.toString())
+      }
+       
+      val para = arr(21).split("\\x02")
+      for (i <- para) {
+        val itemArr = i.split("\\x03")
+        field(itemArr(0).trim()) = itemArr(1);
+      }
+
+      field("server_time") = arr(22);
     }
-
-    val para = arr(21).split("\\x02")
-    for (i <- para) {
-      val itemArr = i.split("\\x03")
-      field(itemArr(0).trim()) = itemArr(1);
-    }
-
-    field("server_time") = arr(22)
-
-    return this;
+       return this;
   }
 
 
