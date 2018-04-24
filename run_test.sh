@@ -29,7 +29,7 @@ then
 fi
 
 cd ${workPath}
-spark-submit --class ${itemInfoTestClass} ${sparkConf} "${allJar}" "${itemInfoPath}"                                # 测试iteminfo解析
+#spark-submit --class ${itemInfoTestClass} ${sparkConf} "${allJar}" "${itemInfoPath}"                                # 测试iteminfo解析
 spark-submit --class ${readeventTestClass} ${sparkConf} "${allJar}" "${readeventPath}"                              # 测试readevent解析
 mv ${allJar} ${myJar}
 rm jar -fr

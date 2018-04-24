@@ -37,7 +37,7 @@ class ReadEvent() {
     var linea = line.replace("\\r", "");
     linea = linea.replace("\\n", "");
     val arr = line.split("\\x01");
-    if (arr.length >= 22) {
+    if (arr.length >= 23) {
       for (i <- 0 to 20) {
         val key = field(i.toString());
         field(key) = arr(i);
