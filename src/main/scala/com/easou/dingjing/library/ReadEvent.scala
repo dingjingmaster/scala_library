@@ -34,27 +34,26 @@ class ReadEvent() {
                         "20" -> "event_id");
 
   def parseLine(line : String) : ReadEvent = {
-    var linea = line.replace("\\r", "");
-    linea = linea.replace("\\n", "");
+    var linea = line.replace("\\n", "");
     val arr = line.split("\\x01");
-    if (arr.length >= 23) {
-      for (i <- 0 to 20) {
-        val key = field(i.toString());
-        field(key) = arr(i);
-        field -= (i.toString())
-      }
-       
-      val para = arr(21).split("\\x02")
-      for (i <- para) {
-        val itemArr = i.split("\\x03")
-        if (itemArr.length > 1) {
-          field(itemArr(0).trim()) = itemArr(1);
-        }
-      }
-
-      field("server_time") = arr(22);
+    for (i <- 0 to 20) {
+      val key = field(i.toString());
+      field(key) = arr(i);
+      field -= (i.toString())
     }
-       return this;
+       
+    val para = arr(21).split("\\x02")
+    for (i <- para) {
+      val itemArr = i.split("\\x03")
+      if (itemArr.length > 1) {
+        field(itemArr(0).trim()) = itemArr(1);
+      } else {
+        field(itemArr(0).trim()) = "";
+      }
+    }
+
+    field("server_time") = arr(22);
+    return this;
   }
 
 
@@ -68,7 +67,7 @@ class ReadEvent() {
     try {
       value = field(key);
     } catch {
-      case ex : Throwable => println("查询的key " + key + " 不合理");
+      case ex : Throwable => println("查询的key " + key + " 不存在");
     }
 
     return value;

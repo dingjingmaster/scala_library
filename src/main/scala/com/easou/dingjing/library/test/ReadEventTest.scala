@@ -25,7 +25,7 @@ object ReadEventTest{
     val test = sc.textFile(readPath)
                     .map(test_line);
 
-    println(test.take(2)(1))
+    println(test.take(10)(1))
   }
 
   def test_line(line : String) : String = {
@@ -39,7 +39,7 @@ object ReadEventTest{
       out += "\n"
     }
 
-    println(ii.getValues(List("os", "appudid", "uid", "sort", "booktype", "ischapterincharged")))
+    println(ii.getValues(List("uid", "maxsort", "sort", "status", "nid", "chargebeginsort", "usertype", "cpid", "booktype", "inchapterincharged", "type", "entrance", "appudid", "gid", "ismaxsort", "agent_name")))
 
     return out;
   }
