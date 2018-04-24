@@ -47,7 +47,9 @@ class ReadEvent() {
       val para = arr(21).split("\\x02")
       for (i <- para) {
         val itemArr = i.split("\\x03")
-        field(itemArr(0).trim()) = itemArr(1);
+        if (itemArr.length > 1) {
+          field(itemArr(0).trim()) = itemArr(1);
+        }
       }
 
       field("server_time") = arr(22);
