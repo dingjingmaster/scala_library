@@ -67,7 +67,7 @@ class ReadEvent() {
     try {
       value = field(key);
     } catch {
-      case ex : Throwable => println("查询的key " + key + " 不存在");
+      case ex : Throwable => {}; //println("" + key + " is");
     }
 
     return value;
