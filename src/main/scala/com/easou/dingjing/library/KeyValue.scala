@@ -9,12 +9,12 @@ package com.easou.dingjing.library;
 import scala.collection.mutable.Map;
 import scala.collection.mutable.ListBuffer;
 
-class KeyValueLine {
+class KeyValue {
   private val kkToken: Char = '\02'
   private val kvToken: Char = '\03'
   private var map = Map[String, String]();
 
-  def parseLine(line: String): KeyValueLine = {
+  def parseLine(line: String): KeyValue = {
     var linea = line.replace("\\r", "")
     linea = linea.replace("\\n", "")
     val arr: Array[String] = linea.split(kkToken)

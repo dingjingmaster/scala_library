@@ -6,9 +6,9 @@
  ************************************************************************/
 package com.easou.dingjing.library.test;
 
+import com.easou.dingjing.library.{KeyValue=>KV};
 import scala.collection.mutable.Map
 
-import com.easou.dingjing.library.{KeyValueLine => KV};
 
 object KeyValueTest{
   def main (args : Array[String]) : Unit = {
