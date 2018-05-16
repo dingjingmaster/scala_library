@@ -15,6 +15,7 @@ allJar="${workPath}/jar/dingjing.jar"
 
 itemInfoTestClass="com.easou.dingjing.library.test.ItemInfoTest"
 readeventTestClass="com.easou.dingjing.library.test.ReadEventTest"
+keyValueTestClass="com.easou.dingjing.library.test.KeyValueTest"
 
 sparkConf=" --master ${sparkMaster} "
 
@@ -30,7 +31,9 @@ fi
 
 cd ${workPath}
 #spark-submit --class ${itemInfoTestClass} ${sparkConf} "${allJar}" "${itemInfoPath}"                                # 测试iteminfo解析
-spark-submit --class ${readeventTestClass} ${sparkConf} "${allJar}" "${readeventPath}"                              # 测试readevent解析
-mv ${allJar} ${myJar}
-rm jar -fr
+#spark-submit --class ${readeventTestClass} ${sparkConf} "${allJar}" "${readeventPath}"                              # 测试readevent解析
+export CLASSPATH=.:./jar/*:$CLASSPATH
+scala ${keyValueTestClass}
+#mv ${allJar} ${myJar}
+#rm jar -fr
 
