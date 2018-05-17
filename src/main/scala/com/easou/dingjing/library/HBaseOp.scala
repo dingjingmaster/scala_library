@@ -7,7 +7,7 @@
 package com.easou.dingjing.library
 
 import java.util.{ArrayList, List}
-import java.io.{FileWriter, IOException}
+import java.io.{FileWriter, IOException, BufferedReader, File, FileReader}
 
 import scala.collection.mutable.{Map}
 import scala.collection.JavaConversions._
@@ -15,30 +15,100 @@ import scala.collection.JavaConversions._
 import org.apache.hadoop.hbase.util.Bytes
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.hbase.{HBaseConfiguration, KeyValue=>HKV}
-import org.apache.hadoop.hbase.client.{Result, ResultScanner, Scan, HTable}
+import org.apache.hadoop.hbase.client.{Put, Result, ResultScanner, Scan, HTable}
 
 import com.easou.dingjing.library.{KeyValue=>JKV}
 
 class HBaseOp {
+  private var tableName = ""
   private var hbaseconf = HBaseConfiguration.create()
   hbaseconf.set("hbase.zookeeper.quorum", "moses.namenode01,moses.datanode10,moses.datanode11,moses.datanode12,moses.datanode13")
   hbaseconf.set("hbase.zookeeper.property.clientPort", "2181")
   private var htable: HTable = null
   private var resultList = new ArrayList[Map[String, String]]()
-  
-  def apply() = {
-    hbaseconf = HBaseConfiguration.create()
-    hbaseconf.set("hbase.zookeeper.quorum", "moses.namenode01,moses.datanode10,moses.datanode11,moses.datanode12,moses.datanode13")
-    hbaseconf.set("hbase.zookeeper.property.clientPort", "2181")
-    resultList = new ArrayList[Map[String, String]]()
+  private var putList = new ArrayList[Put]()
+
+
+  def setTableName (tn: String): HBaseOp = {
+    tableName = tn
+
+    return this
   }
 
-  def scanResult(tableName: String, family: String, filed: Seq[String]): HBaseOp = {
+
+  def open (): Boolean = {
+      close()
+      htable = new HTable(hbaseconf, tableName)
+      if (null != htable) {
+        return true
+      }
+
+      return false
+  }
+
+
+  def close (): Unit = {
+    if (null != htable) {
+      htable.close()
+    }
+  }
+
+
+  private def commit(): Boolean = {
+    if (null == htable) {
+      println ("错误")
+    }
+    try {
+      if (putList.size() > 0) {
+        htable.put(putList)
+        putList.clear()
+        return true
+      }
+    } catch {
+      case ex: IOException => {println(ex.getMessage())}
+    }
+
+    return false
+  }
+
+
+  private def addRow(row: String, family: String, column: String, value: String): Unit = {
+    val p = new Put(Bytes.toBytes(row))
+    p.add(Bytes.toBytes(family), Bytes.toBytes(column), Bytes.toBytes(value))
+    putList.add(p)
+  }
+
+
+  def inject(row: String, family: String, keyValue: Map[String, String]): Boolean = {
+
+    for (i <- keyValue.iterator) {
+      addRow(row, family, i._1, i._2)
+    }
+    if (commit()) {
+      return true
+    }
+
+    return false
+  }
+
+
+  def inject(row: String, family: String, key: String, value: String): Boolean = {
+
+    addRow(row, family, key, value)
+    if (commit()) {
+      return true
+    }
+
+    return false
+  }
+
+
+  def scanResult(family: String, filed: Seq[String]): HBaseOp = {
 
     var scan: Scan = null
     var scanner: ResultScanner = null
     try {
-      htable = new HTable(hbaseconf, tableName)
+      open()
       scan = new Scan()
       for (i <- filed.toList) {
         scan.addColumn(Bytes.toBytes(family), Bytes.toBytes(i))
@@ -61,14 +131,14 @@ class HBaseOp {
     } catch {
       case ex: IOException => {println("error: " + ex.getMessage())}
     } finally {
-      scanner.close()
+      close()
     }
 
     return this
   }
 
 
-  def scanToFile (path: String, tableName: String, family: String, filed: Seq[String]): Unit = {
+  def scanToFile (path: String, family: String, filed: Seq[String]): Unit = {
 
     val jkv = new JKV()
     var scanner: ResultScanner = null
@@ -76,7 +146,7 @@ class HBaseOp {
     try {
       val fw = new FileWriter(path)
       val scan = new Scan()
-      htable = new HTable(hbaseconf, tableName)
+      open()
       for (i <- filed.toList) {
         scan.addColumn(Bytes.toBytes(family), Bytes.toBytes(i))
       }
@@ -101,7 +171,7 @@ class HBaseOp {
     } catch {
       case ex: IOException => {println("error: " + ex.getMessage())}
     } finally {
-      scanner.close()
+      close()
       writeFile (path, resultTmp)
     }
   }
@@ -118,6 +188,7 @@ class HBaseOp {
       case ex: IOException => {println(ex.getMessage())}
     } finally {
       fw.close()
+      list.clear()
     }
   }
 

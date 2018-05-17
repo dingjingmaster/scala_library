@@ -15,7 +15,7 @@ object HBaseOpTest {
     }
     val path = args(0)
     val hb = new HBaseOp()
-    hb.scanToFile(path, "item_info", "x", Seq("name"))
+    hb.setTableName("item_info").scanToFile(path, "x", Seq("name"))
   }
 }
 
