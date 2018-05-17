@@ -75,7 +75,7 @@ class HBaseOp {
   private def addRow(row: String, family: String, column: String, value: String): Unit = {
     val p = new Put(Bytes.toBytes(row))
     p.add(Bytes.toBytes(family), Bytes.toBytes(column), Bytes.toBytes(value))
-    putList.add(p)
+    putList += p
   }
 
 
@@ -108,7 +108,6 @@ class HBaseOp {
     var scan: Scan = null
     var scanner: ResultScanner = null
     try {
-      open()
       scan = new Scan()
       for (i <- filed.toList) {
         scan.addColumn(Bytes.toBytes(family), Bytes.toBytes(i))
@@ -131,7 +130,6 @@ class HBaseOp {
     } catch {
       case ex: IOException => {println("error: " + ex.getMessage())}
     } finally {
-      close()
     }
 
     return this
@@ -146,7 +144,6 @@ class HBaseOp {
     try {
       val fw = new FileWriter(path)
       val scan = new Scan()
-      open()
       for (i <- filed.toList) {
         scan.addColumn(Bytes.toBytes(family), Bytes.toBytes(i))
       }
@@ -171,7 +168,6 @@ class HBaseOp {
     } catch {
       case ex: IOException => {println("error: " + ex.getMessage())}
     } finally {
-      close()
       writeFile (path, resultTmp)
     }
   }

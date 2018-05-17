@@ -7,6 +7,7 @@
 package com.easou.dingjing.library.test
 
 import com.easou.dingjing.library.HBaseOp
+import scala.collection.mutable.Map
 
 object HBaseOpTest {
   def main(args: Array[String]): Unit = {
@@ -15,7 +16,8 @@ object HBaseOpTest {
     }
     val path = args(0)
     val hb = new HBaseOp()
-    hb.setTableName("item_info").scanToFile(path, "x", Seq("name"))
+    //hb.setTableName("item_info").open()
+    //hb.scanToFile(path, "x", Seq("name"))
   }
 }
 
