@@ -12,10 +12,12 @@ readeventPath="hdfs://10.26.29.210:8020/user/hive/warehouse/event_info.db/b_read
 
 myJar="/data/jar/"
 allJar="${workPath}/jar/dingjing.jar"
+testFile="test.txt"
 
 itemInfoTestClass="com.easou.dingjing.library.test.ItemInfoTest"
 readeventTestClass="com.easou.dingjing.library.test.ReadEventTest"
 keyValueTestClass="com.easou.dingjing.library.test.KeyValueTest"
+HBaseOpTestClass="com.easou.dingjing.library.test.HBaseOpTest"
 
 sparkConf=" --master ${sparkMaster} "
 
@@ -32,8 +34,9 @@ fi
 cd ${workPath}
 #spark-submit --class ${itemInfoTestClass} ${sparkConf} "${allJar}" "${itemInfoPath}"                                # 测试iteminfo解析
 #spark-submit --class ${readeventTestClass} ${sparkConf} "${allJar}" "${readeventPath}"                              # 测试readevent解析
-export CLASSPATH=.:./jar/*:$CLASSPATH
-scala ${keyValueTestClass}
+export CLASSPATH=.:jar/*:lib/*:$CLASSPATH
+#scala ${keyValueTestClass}
+scala ${HBaseOpTestClass} ${testFile}
 #mv ${allJar} ${myJar}
 #rm jar -fr
 
