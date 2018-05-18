@@ -35,8 +35,8 @@ cd ${workPath}
 #spark-submit --class ${itemInfoTestClass} ${sparkConf} "${allJar}" "${itemInfoPath}"                                # 测试iteminfo解析
 #spark-submit --class ${readeventTestClass} ${sparkConf} "${allJar}" "${readeventPath}"                              # 测试readevent解析
 export CLASSPATH=.:jar/*:lib/*:$CLASSPATH
-#scala ${keyValueTestClass}
-scala ${HBaseOpTestClass} ${testFile}
+scala ${keyValueTestClass}
+#scala ${HBaseOpTestClass} ${testFile}
 #mv ${allJar} ${myJar}
 #rm jar -fr
 

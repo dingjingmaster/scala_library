@@ -57,6 +57,18 @@ class KeyValue {
   }
 
 
+  def valueLine(map: Map[String, String], key: List[String], token: String ="\t"): String = {
+    var line = ListBuffer[String]()
+    if (map.size > 0 && key.size > 0) {
+      for (i <- key) {
+        line += map(i)
+      }
+    }
+
+    return line.mkString(token)
+  }
+
+
   def KVLine(map: Map[String, String]): String = {
     var line = ""
     if (map.size > 0) {
