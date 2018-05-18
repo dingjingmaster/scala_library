@@ -139,6 +139,7 @@ class HBaseOp {
   def scanToFile (path: String, family: String, filed: Seq[String]): Unit = {
 
     val jkv = new JKV()
+    val fw = new FileWriter(path)
     var scanner: ResultScanner = null
     var resultTmp = new ArrayList[Map[String, String]]()
     try {
@@ -159,7 +160,7 @@ class HBaseOp {
           }
           resultTmp += resultLine
           if (resultTmp.length >= 1000) {
-            writeFile (path, resultTmp)
+            writeFile (fw, resultTmp)
           }
         } else {
           flag = false
@@ -168,7 +169,7 @@ class HBaseOp {
     } catch {
       case ex: IOException => {println("error: " + ex.getMessage())}
     } finally {
-      writeFile (path, resultTmp)
+      writeFile (fw, resultTmp)
     }
   }
 
@@ -176,6 +177,7 @@ class HBaseOp {
   def scanValueToFile (path: String, family: String, filed: Seq[String]): Unit = {
 
     val jkv = new JKV()
+    val fw = new FileWriter(path)
     var scanner: ResultScanner = null
     var resultTmp = new ArrayList[Map[String, String]]()
     try {
@@ -196,7 +198,7 @@ class HBaseOp {
           }
           resultTmp += resultLine
           if (resultTmp.length >= 1000) {
-            writeFile (path, resultTmp, filed.toList)
+            writeFile (fw, resultTmp, filed.toList)
           }
         } else {
           flag = false
@@ -205,14 +207,14 @@ class HBaseOp {
     } catch {
       case ex: IOException => {println("error: " + ex.getMessage())}
     } finally {
-      writeFile (path, resultTmp)
+      writeFile (fw, resultTmp)
+      fw.close()
     }
   }
 
 
-  def writeFile(path: String, list: List[Map[String, String]], key: List[String]): Unit = {
+  def writeFile(fw: FileWriter, list: List[Map[String, String]], key: List[String]): Unit = {
     val jkv = new JKV()
-    val fw = new FileWriter(path)
     try {
       for (i <- list) {
         fw.write(jkv.valueLine(i, key.toList) + "\n")
@@ -220,15 +222,13 @@ class HBaseOp {
     } catch {
       case ex: IOException => {println(ex.getMessage())}
     } finally {
-      fw.close()
       list.clear()
     }
   }
 
 
-  def writeFile(path: String, list: List[Map[String, String]]): Unit = {
+  def writeFile(fw: FileWriter, list: List[Map[String, String]]): Unit = {
     val jkv = new JKV()
-    val fw = new FileWriter(path)
     try {
       for (i <- list) {
         fw.write(jkv.KVLine(i) + "\n")
@@ -236,16 +236,14 @@ class HBaseOp {
     } catch {
       case ex: IOException => {println(ex.getMessage())}
     } finally {
-      fw.close()
       list.clear()
     }
   }
 
 
-  def writeFile(path: String): Int = {
+  def writeFile(fw: FileWriter): Int = {
 
     val jkv = new JKV()
-    val fw = new FileWriter(path)
     try {
       for (i <- resultList) {
         fw.write(jkv.KVLine(i) + "\n")
@@ -253,7 +251,6 @@ class HBaseOp {
     } catch {
       case ex: IOException => {println(ex.getMessage())}
     } finally {
-      fw.close()
     }
 
     return resultList.length

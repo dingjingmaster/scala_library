@@ -36,7 +36,7 @@ cd ${workPath}
 #spark-submit --class ${readeventTestClass} ${sparkConf} "${allJar}" "${readeventPath}"                              # 测试readevent解析
 export CLASSPATH=.:jar/*:lib/*:$CLASSPATH
 #scala ${keyValueTestClass}
-scala ${HBaseOpTestClass} ${testFile}
+#scala ${HBaseOpTestClass} ${testFile}
 #mv ${allJar} ${myJar}
 #rm jar -fr
 
