@@ -173,6 +173,59 @@ class HBaseOp {
   }
 
 
+  def scanValueToFile (path: String, family: String, filed: Seq[String]): Unit = {
+
+    val jkv = new JKV()
+    var scanner: ResultScanner = null
+    var resultTmp = new ArrayList[Map[String, String]]()
+    try {
+      val fw = new FileWriter(path)
+      val scan = new Scan()
+      for (i <- filed.toList) {
+        scan.addColumn(Bytes.toBytes(family), Bytes.toBytes(i))
+      }
+      scanner = htable.getScanner(scan)
+      var flag = true
+      while(flag) {
+        val res = scanner.next()
+        if (res != null) {
+          var resultLine = Map[String, String]()
+          resultLine("rowkey") = Bytes.toString(res.getRow())
+          for (kv <- res.list()) {
+            resultLine(Bytes.toString(kv.getQualifier())) = Bytes.toString(kv.getValue())
+          }
+          resultTmp += resultLine
+          if (resultTmp.length >= 1000) {
+            writeFile (path, resultTmp, filed.toList)
+          }
+        } else {
+          flag = false
+        }
+      }
+    } catch {
+      case ex: IOException => {println("error: " + ex.getMessage())}
+    } finally {
+      writeFile (path, resultTmp)
+    }
+  }
+
+
+  def writeFile(path: String, list: List[Map[String, String]], key: List[String]): Unit = {
+    val jkv = new JKV()
+    val fw = new FileWriter(path)
+    try {
+      for (i <- list) {
+        fw.write(jkv.valueLine(i, key.toList) + "\n")
+      }
+    } catch {
+      case ex: IOException => {println(ex.getMessage())}
+    } finally {
+      fw.close()
+      list.clear()
+    }
+  }
+
+
   def writeFile(path: String, list: List[Map[String, String]]): Unit = {
     val jkv = new JKV()
     val fw = new FileWriter(path)
