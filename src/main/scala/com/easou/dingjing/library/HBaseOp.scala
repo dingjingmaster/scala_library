@@ -207,7 +207,7 @@ class HBaseOp {
     } catch {
       case ex: IOException => {println("error: " + ex.getMessage())}
     } finally {
-      writeFile (fw, resultTmp)
+      writeFile (fw, resultTmp, filed.toList)
       fw.close()
     }
   }
