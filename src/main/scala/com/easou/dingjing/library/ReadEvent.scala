@@ -35,16 +35,16 @@ class ReadEvent() {
 
   def parseLine(line : String) : ReadEvent = {
     var linea = line.replace("\\n", "");
-    val arr = line.split("\\x01");
+    val arr = line.split("\\x01", -1);
     for (i <- 0 to 20) {
       val key = field(i.toString());
       field(key) = arr(i);
       field -= (i.toString())
     }
        
-    val para = arr(21).split("\\x02")
+    val para = arr(21).split("\\x02", -1)
     for (i <- para) {
-      val itemArr = i.split("\\x03")
+      val itemArr = i.split("\\x03", -1)
       if (itemArr.length > 1) {
         field(itemArr(0).trim()) = itemArr(1);
       } else {
