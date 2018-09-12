@@ -17,9 +17,9 @@ class KeyValue {
   def parseLine(line: String): KeyValue = {
     var linea = line.replace("\\r", "")
     linea = linea.replace("\\n", "")
-    val arr: Array[String] = linea.split(kkToken)
+    val arr: Array[String] = linea.split(kkToken, -1)
     for (x <- arr) {
-      val kvarr = x.split(kvToken)
+      val kvarr = x.split(kvToken, -1)
       if (kvarr.length > 1) {
         map(kvarr(0).trim()) = kvarr(1)
       } else {

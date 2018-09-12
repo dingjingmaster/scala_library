@@ -19,7 +19,7 @@ class ItemInfo() {
     var linea = line.replace("\\r", "");
     linea = linea.replace("\\n", "");
 
-    val arr = line.split(token);
+    val arr = line.split(token, -1);
     var i = 0;
     gid = arr(i)
 
